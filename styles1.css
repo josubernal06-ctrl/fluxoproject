@@ -1,133 +1,136 @@
-        /* --- VARIABLES DE COLOR BASADAS EN TU LOGO --- */
-        :root {
-            --bg-dark: #1e1e1e; /* Fondo oscuro del logo */
-            --bg-nav: rgba(30, 30, 30, 0.9);
-            --text-light: #ffffff;
-            /* El degradado de la X del logo (Celeste a Verde) */
-            --fluxo-gradient: linear-gradient(135deg, #00d2ff 0%, #3ebd60 100%);
-            --fluxo-gradient-hover: linear-gradient(135deg, #3ebd60 0%, #00d2ff 100%);
-        }
+    
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+    /* --- VARIABLES DE COLOR BASADAS EN TU LOGO --- */
+    :root {
+        --bg-dark: #1e1e1e; /* Fondo oscuro del logo */
+        --bg-nav: rgba(30, 30, 30, 0.9);
+        --text-light: #ffffff;
+        /* El degradado de la X del logo (Celeste a Verde) */
+        --fluxo-gradient: linear-gradient(135deg, #00d2ff 0%, #3ebd60 100%);
+        --fluxo-gradient-hover: linear-gradient(135deg, #3ebd60 0%, #00d2ff 100%);
+    }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-        }
+    * {
+        margin: 0;
+       padding: 0;
+        box-sizing: border-box;
+        /* 2. CAMBIA ESTO PARA USAR POPPINS */
+        font-family: 'Poppins', sans-serif;
+    }
 
-        body {
-            background-color: var(--bg-dark);
-            color: var(--text-light);
-        }
+    body {
+        background-color: var(--bg-dark);
+        color: var(--text-light);
+    }
 
-        /* --- MENÚ SUPERIOR --- */
-        header {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: var(--bg-nav);
-            backdrop-filter: blur(10px);
-            z-index: 1000;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
+    /* --- MENÚ SUPERIOR --- */
+    header {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        background: var(--bg-nav);
+        backdrop-filter: blur(10px);
+        z-index: 1000;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
 
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 20px;
-        }
+    .nav-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+       align-items: center;
+        padding: 15px 20px;
+    }
 
-        .logo img {
-            height: 40px; /* Ajusta esto según el tamaño de tu logo */
-            display: block;
-        }
+    .logo img {
+        height: 40px; /* Ajusta esto según el tamaño de tu logo */
+        display: block;
+    }
 
-        nav ul {
-            list-style: none;
-            display: flex;
-            gap: 30px;
-        }
+    nav ul {
+        list-style: none;
+        display: flex;
+        gap: 30px;
+    }
 
-        nav ul li a {
-            text-decoration: none;
-            color: var(--text-light);
-            font-weight: 500;
-            transition: color 0.3s ease;
-        }
+    nav ul li a {
+        text-decoration: none;
+        color: var(--text-light);
+        font-weight: 500;
+        transition: color 0.3s ease;
+    }
 
-        nav ul li a:hover {
-            color: #00d2ff; /* Color celeste del logo al pasar el mouse */
-        }
+    nav ul li a:hover {
+        color: #00d2ff; /* Color celeste del logo al pasar el mouse */
+    }
 
-        /* --- PRIMERA PLANA (HERO SECTION) --- */
-        .hero {
-            height: 100vh;
-            /* Imagen de un auto oscuro de fondo (puedes cambiar la URL por uno de tus autos) */
-            background: linear-gradient(rgba(30, 30, 30, 0.7), rgba(30, 30, 30, 0.9)), 
-                        url('src/autos/Maxus-768x512.png') center/cover no-repeat;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 0 20px;
-        }
+    /* --- PRIMERA PLANA (HERO SECTION) --- */
+    .hero {
+        height: 100vh;
+        /* Imagen de un auto oscuro de fondo (puedes cambiar la URL por uno de tus autos) */
+        background: linear-gradient(rgba(30, 30, 30, 0.7), rgba(30, 30, 30, 0.9)), 
+            url('src/autos/Maxus-768x512.png') center/cover no-repeat;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 0 20px;
+    }
 
-        .hero-content {
-            max-width: 800px;
-            margin-top: 60px; /* Para compensar el menú fijo */
-        }
+    .hero-content {
+        max-width: 800px;
+        margin-top: 60px; /* Para compensar el menú fijo */
+    }
 
-        .hero-content h1 {
-            font-size: 3.5rem;
-            margin-bottom: 20px;
-            letter-spacing: 1px;
-        }
+    .hero-content h1 {
+        font-size: 3.5rem;
+        margin-bottom: 20px;
+        letter-spacing: 1px;
+    }
 
-        .highlight {
-            background: var(--fluxo-gradient);
-            -webkit-background-clip: text; /* Para Chrome y Safari */
-            background-clip: text;         /* El estándar moderno */
-            -webkit-text-fill-color: transparent;
-            color: transparent;            /* El respaldo estándar */
-        }
+    .highlight {
+        background: var(--fluxo-gradient);
+       -webkit-background-clip: text; /* Para Chrome y Safari */
+        background-clip: text;         /* El estándar moderno */
+        -webkit-text-fill-color: transparent;
+        color: transparent;            /* El respaldo estándar */
+    }
 
-        .hero-content p {
-            font-size: 1.2rem;
-            margin-bottom: 40px;
-            color: #cccccc;
-        }
+    .hero-content p {
+        font-size: 1.2rem;
+        margin-bottom: 40px;
+        color: #cccccc;
+    }
 
-        /* --- BOTÓN ESTILO FLUXOCARS --- */
-        .btn-primary {
-            display: inline-block;
-            padding: 15px 35px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            color: #fff;
-            text-decoration: none;
-            background: var(--fluxo-gradient);
-            border-radius: 50px;
-            border: none;
-            cursor: pointer;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
+    /* --- BOTÓN ESTILO FLUXOCARS --- */
+    .btn-primary {
+        display: inline-block;
+        padding: 15px 35px;
+        font-size: 1.1rem;
+        font-weight: bold;
+        color: #fff;
+        text-decoration: none;
+        background: var(--fluxo-gradient);
+        border-radius: 50px;
+        border: none;
+        cursor: pointer;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
 
-        .btn-primary:hover {
-            background: var(--fluxo-gradient-hover);
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0, 210, 255, 0.3);
-        }
+    .btn-primary:hover {
+        background: var(--fluxo-gradient-hover);
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(0, 210, 255, 0.3);
+    }
 
-        /* Responsividad básica para celulares */
-        @media (max-width: 768px) {
-            .hero-content h1 { font-size: 2.5rem; }
-            nav ul { display: none; /* Aquí luego meteremos un menú hamburguesa */ }
-        }
+    /* Responsividad básica para celulares */
+    @media (max-width: 768px) {
+        .hero-content h1 { font-size: 2.5rem; }
+        nav ul { display: none; /* Aquí luego meteremos un menú hamburguesa */ }
+    }
 
-        /* --- ESTILOS GENERALES PARA SECCIONES --- */
+    /* --- ESTILOS GENERALES PARA SECCIONES --- */
     .section-title {
         text-align: center;
         font-size: 2.5rem;
@@ -297,13 +300,18 @@
         color: #777;
     }
 
-    /* --- MENÚ DE PERFIL DESPLEGABLE --- */
+/* =========================================
+   MENÚ DE PERFIL DESPLEGABLE (FINAL)
+   ========================================= */
+
+/* Contenedor principal del perfil */
 .user-profile {
     position: relative;
     display: inline-block;
     margin-left: 20px;
 }
 
+/* Icono principal de la personita en el header */
 .profile-icon {
     width: 40px;
     height: 40px;
@@ -327,39 +335,32 @@
     border-color: #00d2ff; /* Borde celeste al pasar el mouse */
 }
 
-/* Contenido oculto por defecto */
+/* Contenedor del menú desplegable (Oculto por defecto) */
 .dropdown-content {
     display: none;
     position: absolute;
     right: 0;
-    top: 100%; /* <--- EL TRUCO ESTÁ AQUÍ (Elimina el hueco) */
+    top: 100%; /* Elimina el hueco para que el clic no falle */
     background-color: #1a1a1a;
-    min-width: 180px;
+    min-width: 200px; /* Ancho perfecto para que entren los iconos y el texto */
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.5);
     border-radius: 8px;
     border: 1px solid #333;
     overflow: hidden;
-    z-index: 1;
+    z-index: 1000;
 }
 
-
-.dropdown-content a {
-    color: var(--text-light);
-    padding: 12px 16px;
-    text-decoration: none;
+/* Clase que se activa con JavaScript para mostrar el menú */
+.dropdown-content.show {
     display: block;
-    font-size: 0.9rem;
-    transition: background 0.3s;
+    animation: fadeIn 0.2s ease-in-out;
 }
 
-.dropdown-content a:hover {
-    background-color: #2a2a2a;
-    color: #3ebd60; /* Verde al pasar el mouse en las opciones */
-}
-
+/* Cabecera del menú (Info del usuario logueado) */
 .user-info {
     padding: 12px 16px;
     background-color: #111;
+    border-bottom: 1px solid #333;
 }
 
 .user-name {
@@ -368,22 +369,54 @@
     font-weight: bold;
 }
 
+/* Líneas separadoras internas */
 .dropdown-content hr {
     border: 0;
     border-top: 1px solid #333;
     margin: 0;
 }
 
+/* Enlaces / Opciones del menú (Alineación de texto e Iconos SVG) */
+.dropdown-content a {
+    color: var(--text-light);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 12px; /* Separación perfecta entre icono y texto */
+    font-size: 0.9rem;
+    padding: 12px 16px;
+    transition: background 0.3s ease, padding-left 0.3s ease, color 0.3s ease;
+}
+
+/* Estilo base de los iconos SVG dentro de las opciones */
+.dropdown-content a svg {
+    opacity: 0.7; /* Ligeramente apagados para no saturar la vista */
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* Efectos al pasar el ratón por una opción del menú */
+.dropdown-content a:hover {
+    background-color: #2a2a2a;
+    color: #3ebd60; /* Verde de FluxoCars */
+    padding-left: 20px; /* Desplazamiento elegante a la derecha */
+}
+
+/* Efectos del icono SVG al pasar el ratón */
+.dropdown-content a:hover svg {
+    opacity: 1; /* El icono se ilumina */
+    transform: scale(1.1); /* El icono crece un poquito */
+}
+
+/* Botón específico de Cerrar Sesión (Mantiene alerta roja) */
 .logout-text {
     color: #ff4d4d !important;
 }
 
-/* Esta clase 'show' se la pondremos y quitaremos con JavaScript */
-.dropdown-content.show {
-    display: block;
-    animation: fadeIn 0.2s ease-in-out;
+.logout-text:hover {
+    color: #ff7373 !important; /* Rojo brillante al hacer hover */
 }
 
+/* Animación de entrada suave del cuadro completo */
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(-10px); }
     to { opacity: 1; transform: translateY(0); }

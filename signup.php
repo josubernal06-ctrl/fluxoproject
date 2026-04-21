@@ -38,11 +38,41 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta charset="UTF-8">
     <title>Registro | FluxoCars</title>
     <link rel="stylesheet" href="styles1.css">
+    <link rel="icon" type="image/png" href="src/logos/mini-logo.jpg">
     <style>
-        .auth-container { max-width: 400px; margin: 100px auto; padding: 30px; background: #2a2a2a; border-radius: 10px; border: 1px solid #333; }
+        /* Centrado perfecto de toda la página */
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh; /* Toma el 100% de la altura de la ventana */
+            margin: 0;
+        }
+        
+        .auth-container { 
+            width: 100%;
+            max-width: 400px; 
+            padding: 30px; 
+            background: #2a2a2a; 
+            border-radius: 10px; 
+            border: 1px solid #333; 
+        }
+        
         .auth-container h2 { margin-bottom: 20px; text-align: center; }
         .auth-form input, .auth-form select { width: 100%; padding: 12px; margin-bottom: 15px; background: #1e1e1e; border: 1px solid #444; color: white; border-radius: 5px; }
         .msg { margin-bottom: 15px; color: #3ebd60; text-align: center; }
+        /* Estilos God para los enlaces (Inicia sesión aquí, etc.) */
+        .auth-container a {
+            color: #00d2ff; /* Celeste del logo */
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease, text-shadow 0.3s ease;
+        }
+
+        .auth-container a:hover {
+            color: #3ebd60; /* Cambia al verde del logo al pasar el ratón */
+            text-shadow: 0 0 10px rgba(62, 189, 96, 0.3); /* Pequeño brillo */
+        }
     </style>
 </head>
 <body>

@@ -2,7 +2,7 @@
 // database.php
 $host = 'localhost';
 $user = 'root'; 
-$password = ''; /
+$password = '';
 $database = 'fluxocars_db';
 
 $conn = new mysqli($host, $user, $password, $database);
