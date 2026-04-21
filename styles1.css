@@ -1,0 +1,297 @@
+        /* --- VARIABLES DE COLOR BASADAS EN TU LOGO --- */
+        :root {
+            --bg-dark: #1e1e1e; /* Fondo oscuro del logo */
+            --bg-nav: rgba(30, 30, 30, 0.9);
+            --text-light: #ffffff;
+            /* El degradado de la X del logo (Celeste a Verde) */
+            --fluxo-gradient: linear-gradient(135deg, #00d2ff 0%, #3ebd60 100%);
+            --fluxo-gradient-hover: linear-gradient(135deg, #3ebd60 0%, #00d2ff 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+        }
+
+        /* --- MENÚ SUPERIOR --- */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: var(--bg-nav);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+        }
+
+        .logo img {
+            height: 40px; /* Ajusta esto según el tamaño de tu logo */
+            display: block;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: var(--text-light);
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: #00d2ff; /* Color celeste del logo al pasar el mouse */
+        }
+
+        /* --- PRIMERA PLANA (HERO SECTION) --- */
+        .hero {
+            height: 100vh;
+            /* Imagen de un auto oscuro de fondo (puedes cambiar la URL por uno de tus autos) */
+            background: linear-gradient(rgba(30, 30, 30, 0.7), rgba(30, 30, 30, 0.9)), 
+                        url('src/autos/Maxus-768x512.png') center/cover no-repeat;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin-top: 60px; /* Para compensar el menú fijo */
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+        }
+
+        /* Destacamos una palabra con los colores del logo */
+        .highlight {
+            background: var(--fluxo-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            color: #cccccc;
+        }
+
+        /* --- BOTÓN ESTILO FLUXOCARS --- */
+        .btn-primary {
+            display: inline-block;
+            padding: 15px 35px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #fff;
+            text-decoration: none;
+            background: var(--fluxo-gradient);
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background: var(--fluxo-gradient-hover);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 210, 255, 0.3);
+        }
+
+        /* Responsividad básica para celulares */
+        @media (max-width: 768px) {
+            .hero-content h1 { font-size: 2.5rem; }
+            nav ul { display: none; /* Aquí luego meteremos un menú hamburguesa */ }
+        }
+
+        /* --- ESTILOS GENERALES PARA SECCIONES --- */
+    .section-title {
+        text-align: center;
+        font-size: 2.5rem;
+        margin-bottom: 40px;
+        color: var(--text-light);
+    }
+
+    .categorias-section, .destacados-section {
+        padding: 80px 20px;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    /* --- CATEGORÍAS --- */
+    .grid-categorias {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+    }
+
+    .categoria-card {
+        background: #2a2a2a; /* Un tono un poco más claro que el fondo */
+        padding: 40px 20px;
+        text-align: center;
+        text-decoration: none;
+        color: var(--text-light);
+        border-radius: 10px;
+        border: 1px solid #333;
+        transition: transform 0.3s ease, border-color 0.3s ease;
+    }
+
+    .categoria-card:hover {
+        transform: translateY(-5px);
+        border-color: #3ebd60; /* Verde del logo */
+    }
+
+    .categoria-card h3 {
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+    }
+
+    .categoria-card p {
+        color: #00d2ff; /* Celeste del logo */
+        font-weight: bold;
+    }
+
+    /* --- AUTOS DESTACADOS --- */
+    .grid-autos {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 30px;
+    }
+
+    .auto-card {
+        background: #2a2a2a;
+        border-radius: 10px;
+        overflow: hidden;
+        border: 1px solid #333;
+    }
+
+    .img-placeholder {
+        height: 200px;
+        background: #444;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #888;
+    }
+
+    .auto-info {
+        padding: 20px;
+        text-align: center;
+    }
+
+    .auto-info h3 {
+        margin-bottom: 10px;
+    }
+
+    .precio {
+        font-size: 1.3rem;
+        color: #3ebd60; /* Verde del logo */
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+
+    .btn-outline {
+        display: inline-block;
+        padding: 10px 20px;
+        border: 2px solid #00d2ff;
+        color: #00d2ff;
+        text-decoration: none;
+        border-radius: 50px;
+        transition: all 0.3s ease;
+    }
+
+    .btn-outline:hover {
+        background: #00d2ff;
+        color: #1e1e1e;
+    }
+
+    /* --- FOOTER --- */
+    footer {
+        background: #151515; /* Fondo ultra oscuro para diferenciar */
+        padding-top: 60px;
+        border-top: 1px solid #333;
+    }
+
+    .footer-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 40px;
+    }
+
+    .footer-col h4 {
+        color: var(--text-light);
+        margin-bottom: 20px;
+        font-size: 1.2rem;
+    }
+
+    .footer-col ul {
+        list-style: none;
+    }
+
+    .footer-col ul li {
+        margin-bottom: 10px;
+    }
+
+    .footer-col ul li a, .footer-col p {
+        color: #aaa;
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+
+    .footer-col ul li a:hover {
+        color: #00d2ff;
+    }
+
+    .footer-logo {
+        height: 40px;
+        margin-bottom: 15px;
+    }
+
+    .social-links {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .social-btn {
+        color: #aaa;
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }   
+
+    .social-btn:hover {
+        color: #3ebd60;
+    }
+
+    .footer-bottom {
+        text-align: center;
+        padding: 20px 0;
+        margin-top: 40px;
+        border-top: 1px solid #222;
+        color: #777;
+    }
