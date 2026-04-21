@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -23,9 +26,27 @@
                     <li><a href="#contacto">Contáctanos</a></li>
                 </ul>
             </nav>
-        </div>
+            <div class="user-profile">
+                <div class="profile-icon" id="btnPerfil">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                </div>
+                
+                <div class="dropdown-content" id="menuPerfil">
+                    <?php if(isset($_SESSION['user_id'])): ?>
+                        <div class="user-info">
+                            <p class="user-name">Hola, <?php echo $_SESSION['user_name']; ?></p>
+                        </div>
+                        <hr>
+                        <a href="perfil.php">Mi Perfil</a>
+                        <a href="logout.php" class="logout-text">Cerrar Sesión</a>
+                    <?php else: ?>
+                        <a href="login.php">Iniciar Sesión</a>
+                        <a href="signup.php">Registrarse</a>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div> 
     </header>
-
     <section class="hero">
         <div class="hero-content">
             <h1>Encuentra tu próximo auto en <span class="highlight">FluxoCars</span></h1>
@@ -92,7 +113,7 @@
                 <h4>Enlaces Rápidos</h4>
                 <ul>
                     <li><a href="#">Inicio</a></li>
-                    <li><a href="#">Catálogo Compledo</a></li>
+                    <li><a href="#">Catálogo Completo</a></li>
                     <li><a href="#">Cotizaciones</a></li>
                 </ul>
             </div>
@@ -116,5 +137,20 @@
         </div>
     </footer>
 
+    <script>
+        const btnPerfil = document.getElementById('btnPerfil');
+        const menuPerfil = document.getElementById('menuPerfil');
+
+        btnPerfil.addEventListener('click', function(evento) {
+            menuPerfil.classList.toggle('show');
+            evento.stopPropagation();
+        });
+
+        window.addEventListener('click', function() {
+            if (menuPerfil.classList.contains('show')) {
+                menuPerfil.classList.remove('show');
+            }
+        });
+    </script>
 </body>
 </html>
