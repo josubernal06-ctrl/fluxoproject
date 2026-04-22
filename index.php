@@ -135,13 +135,13 @@ session_start();
     <footer>
         <div class="footer-container">
             <div class="footer-col brand-col">
-                <img src="Logo.png" alt="FluxoCars Logo" class="footer-logo">
+                <img src="src/logos/Logo.png" alt="FluxoCars Logo" class="footer-logo">
                 <p>Importación directa de vehículos con garantía y seguridad para toda Bolivia.</p>
             </div>
             <div class="footer-col">
                 <h4>Enlaces Rápidos</h4>
                 <ul>
-                    <li><a href="#">Inicio</a></li>
+                    <li><a href="index.php">Inicio</a></li>
                     <li><a href="#">Catálogo Completo</a></li>
                     <li><a href="#">Cotizaciones</a></li>
                 </ul>

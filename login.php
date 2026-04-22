@@ -21,10 +21,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             header("Location: index.php");
             exit();
         } else {
-            $error = "Contraseña incorrecta.";
+            $error = "Usuario o contraseña incorrectos.";
         }
     } else {
-        $error = "El usuario no existe.";
+        $error = "Usuario o contraseñas incorrectos.";
     }
 }
 ?>

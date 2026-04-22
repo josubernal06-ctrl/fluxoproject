@@ -234,7 +234,7 @@
     /* --- FOOTER --- */
     footer {
         background: #151515; /* Fondo ultra oscuro para diferenciar */
-        padding-top: 60px;
+        padding-top: 30px;
         border-top: 1px solid #333;
     }
 
@@ -398,7 +398,6 @@
 .dropdown-content a:hover {
     background-color: #2a2a2a;
     color: #3ebd60; /* Verde de FluxoCars */
-    padding-left: 20px; /* Desplazamiento elegante a la derecha */
 }
 
 /* Efectos del icono SVG al pasar el ratón */
