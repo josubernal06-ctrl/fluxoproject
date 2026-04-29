@@ -8,7 +8,7 @@ session_start();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FluxoCars | Vehículos de Importación</title>
     <link rel="stylesheet" href="styles1.css">
-    <link rel="icon" type="image/png" href="src/logos/mini-logo.jpg">
+    <link rel="icon" type="image/png" href="src/logos/mini-logo.png">
 </head>
 <body>
 
@@ -19,8 +19,16 @@ session_start();
             </div>
             <nav>
                 <ul>
-                    <li><a href="#">Inicio</a></li>
                     <li><a href="#catalogo">Catálogo</a></li>
+                    
+                    <?php if (isset($_SESSION['user_rol']) && ($_SESSION['user_rol'] === 'admin' || $_SESSION['user_rol'] === 'sup-admin')): ?>
+                        <li>
+                            <a href="admin_inventario.php">
+                                Inventario
+                            </a>
+                        </li>
+                    <?php endif; ?>
+                    
                     <li><a href="#contacto">Cotizaciones</a></li>
                     <li><a href="#nosotros">Nosotros</a></li>
                     <li><a href="#contacto">Contáctanos</a></li>
