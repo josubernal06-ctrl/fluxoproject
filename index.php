@@ -156,16 +156,16 @@ session_start();
             </div>
             <div class="footer-col">
                 <h4>Contacto</h4>
-                <p>Av. Principal #123, La Paz</p>
+                <p>Calacoto, C.18, Edificio Antares, La Paz</p>
                 <p>info@fluxocars.com</p>
                 <p>+591 70000000</p>
             </div>
             <div class="footer-col">
                 <h4>Síguenos</h4>
                 <div class="social-links">
-                    <a href="#" class="social-btn"> WhatsApp</a>
-                    <a href="#" class="social-btn"> Instagram</a>
-                    <a href="#" class="social-btn"> TikTok</a>
+                    <a href="" class="social-btn"> WhatsApp</a>
+                    <a href="https://www.instagram.com/fluxocars.bo?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" class="social-btn"> Instagram</a>
+                    <a href="#" class="social-btn"> Facebook</a>
                 </div>
             </div>
         </div>
