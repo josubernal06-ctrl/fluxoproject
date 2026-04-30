@@ -1,5 +1,8 @@
 <?php
-// admin_catalogo.php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 include 'admin_auth.php';
 include 'database.php';
 
@@ -14,11 +17,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['subida_manual'])) {
     $marca_id = (int)$_POST['marca_id'];
     $categoria_id = (int)$_POST['categoria_id'];
     $modelo = trim($_POST['modelo']);
-    $anio = (int)$_POST['anio'];
+    
+    // --- NUEVAS COLUMNAS ---
+    $motor_autonomia = trim($_POST['motor_autonomia'] ?? '');
+    $entrega_dias = (int)($_POST['entrega_dias'] ?? 0);
+    
     $precio = (float)$_POST['precio'];
-    $transmision = $_POST['transmision'];
     $combustible = $_POST['combustible'];
     $descripcion = trim($_POST['descripcion']);
+    $estado = "En transito"; // Estado por defecto
     
     $imagen_principal = "placeholder_car.png";
     $pdf_ficha_url = NULL; 
@@ -45,10 +52,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['subida_manual'])) {
         }
     }
 
-    $sql = "INSERT INTO autos (marca_id, categoria_id, modelo, anio, precio, transmision, combustible, descripcion, imagen_principal, pdf_ficha_url) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    // --- INSERT ACTUALIZADO SIN AÑO NI TRANSMISIÓN ---
+    $sql = "INSERT INTO autos (marca_id, categoria_id, modelo, motor_autonomia, precio, combustible, entrega_dias, estado, descripcion, imagen_principal, pdf_ficha_url) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("iisidsssss", $marca_id, $categoria_id, $modelo, $anio, $precio, $transmision, $combustible, $descripcion, $imagen_principal, $pdf_ficha_url);
+    
+    // Cadena: iissdsissss (11 variables)
+    $stmt->bind_param("iissdsissss", $marca_id, $categoria_id, $modelo, $motor_autonomia, $precio, $combustible, $entrega_dias, $estado, $descripcion, $imagen_principal, $pdf_ficha_url);
     
     if ($stmt->execute()) {
         $mensaje = "<div class='alert success'>✅ Vehículo guardado correctamente.</div>";
@@ -57,11 +67,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['subida_manual'])) {
     }
 }
 
-// OBTENER LA LISTA DE AUTOS PARA LA TABLA DEL INVENTARIO
-$query_autos = "SELECT a.id, m.nombre AS marca, c.nombre AS categoria, a.modelo, a.anio, a.precio, a.estado 
+// --- SELECT ACTUALIZADO SIN AÑO NI TRANSMISIÓN ---
+$query_autos = "SELECT a.id, m.nombre AS marca, c.nombre AS categoria, a.modelo, a.motor_autonomia, a.precio, a.estado 
                 FROM autos a 
-                JOIN marcas m ON a.marca_id = m.id 
-                JOIN categorias c ON a.categoria_id = c.id 
+                LEFT JOIN marcas m ON a.marca_id = m.id 
+                LEFT JOIN categorias c ON a.categoria_id = c.id 
                 ORDER BY a.id DESC";
 $lista_autos = $conn->query($query_autos);
 ?>
@@ -72,7 +82,7 @@ $lista_autos = $conn->query($query_autos);
     <meta charset="UTF-8">
     <title>Inventario | FluxoCars</title>
     <link rel="stylesheet" href="styles1.css">
-    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="icon" type="image/png" href="src/logos/mini-logo.png">
     <style>
         body { margin: 0; background-color: var(--bg-dark); overflow: hidden; }
         .dashboard-layout { display: grid; grid-template-columns: 260px 1fr; height: 100vh; }
@@ -100,8 +110,20 @@ $lista_autos = $conn->query($query_autos);
         
        /* SUBA-ACORDEONES */
         .sub-accordion { background-color: #222; font-size: 1rem; margin-top: 15px; border-left: 2px solid #3ebd60; }
-        .sub-panel { background-color: #1a1a1a; padding: 0 15px; /* Aquí quitamos el padding vertical */ max-height: 0; overflow: hidden; transition: max-height 0.4s ease-out; margin-bottom: 15px; }
-        .sub-panel-inner { padding: 15px 0; /* Este nuevo div interno maneja el espacio */ }
+        .sub-panel { background-color: #1a1a1a; padding: 0 15px; max-height: 0; overflow: hidden; transition: max-height 0.4s ease-out; margin-bottom: 15px; }
+        .sub-panel-inner { padding: 15px 0; }
+
+        /* ESTILOS PARA LA IMAGEN DE EJEMPLO DE EXCEL */
+        .excel-preview-img {
+            width: 100%; 
+            max-width: 900px; /* Aumentamos el tamaño máximo para que sea súper legible */
+            border: 2px solid #333; /* Borde más oscuro y sólido */
+            border-radius: 8px; 
+            margin-bottom: 25px; 
+            display: block;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4); /* Sombra para que flote sobre el fondo */
+            background-color: #151515; /* Fondo por si la imagen tiene transparencias */
+        }
 
         /* FORMULARIOS Y BOTONES FILE */
         .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px; }
@@ -144,18 +166,19 @@ $lista_autos = $conn->query($query_autos);
         
         <main class="main-content">
             <h1 class="header-title">Inventario de Vehículos</h1>
-            <?php if($mensaje) echo $mensaje; ?>
+            <?php if(!empty($mensaje)) echo $mensaje; ?>
 
-            <button class="accordion">➕ Agregar Nuevos Vehículos al Inventario</button>
+            <button class="accordion">Agregar Nuevos Vehículos al Inventario</button>
             <div class="panel" id="panel-principal">
                 
                 <button class="accordion sub-accordion">Opción 1: Carga Masiva (Excel / CSV)</button>
                 <div class="sub-panel">
                     <div class="sub-panel-inner">
-                        <p style="color:#aaa; font-size: 0.9rem; margin-bottom: 15px;">Sube un archivo .csv con el formato correcto. Las imágenes se añaden después.</p>
-                        <img src="src/tutoriales/ejemplo_excel.png" alt="Ejemplo" style="width:100%; border:1px solid #444; border-radius:6px; margin-bottom:15px; max-width: 400px; display: block;">
+                        <p style="color:#aaa; font-size: 0.9rem; margin-bottom: 20px;">Sube un archivo .csv, .xls o .xlsx con el formato oficial. Las imágenes y fichas técnicas se añaden después.</p>
+                        <p style="color:#aaa; font-size: 0.9rem; margin-bottom: 20px;">La tabla con los datos debe empezar forzosamente en la esquina superior izquierda (Columna A, Fila 1) con la palabra "Marca".</p>
+                        <img src="src/tutoriales/excel.png" alt="Ejemplo Formato Excel" class="excel-preview-img">
                         <form action="importar_catalogo.php" method="POST" enctype="multipart/form-data" style="display:flex; gap:10px;">
-                            <input type="file" name="archivo_csv" accept=".csv" required>
+                            <input type="file" name="archivo_excel" accept=".xlsx, .xls, .csv" required>
                             <button type="submit" class="btn-primary">Importar</button>
                         </form>
                     </div>
@@ -180,17 +203,14 @@ $lista_autos = $conn->query($query_autos);
                                 </select>
                             </div>
                             <div class="form-group"><label>Modelo</label><input type="text" name="modelo" required></div>
-                            <div class="form-group"><label>Año</label><input type="number" name="anio" required></div>
+                            
+                            <div class="form-group"><label>Motor / Autonomía</label><input type="text" name="motor_autonomia" placeholder="Ej: 380 km / 1.5T" required></div>
+                            <div class="form-group"><label>Tipo (Combustible)</label><input type="text" name="combustible" placeholder="Ej: Eléctrico, Híbrido" required></div>
+                            <div class="form-group"><label>Días de Entrega (Aprox)</label><input type="number" name="entrega_dias" placeholder="Ej: 60" required></div>
                             <div class="form-group"><label>Precio ($US)</label><input type="number" step="0.01" name="precio" required></div>
-                            <div class="form-group">
-                                <label>Transmisión</label>
-                                <select name="transmision" required><option value="Manual">Manual</option><option value="Automatica">Automática</option></select>
-                            </div>
-                            <div class="form-group">
-                                <label>Combustible</label>
-                                <select name="combustible" required><option value="Gasolina">Gasolina</option><option value="Diesel">Diésel</option><option value="Hibrido">Híbrido</option><option value="Electrico">Eléctrico</option></select>
-                            </div>
-                            <div class="form-group" style="grid-column: span 2;"><label>Descripción</label><textarea name="descripcion" rows="2"></textarea></div>
+                            
+                            <div class="form-group" style="grid-column: span 2;"><label>Descripción / Observaciones</label><textarea name="descripcion" rows="2"></textarea></div>
+                            
                             <div class="form-group"><label>Foto Principal (Opcional)</label><input type="file" name="imagen_principal" accept="image/*"></div>
                             <div class="form-group"><label>Ficha PDF (Opcional)</label><input type="file" name="pdf_ficha" accept=".pdf"></div>
                             <button type="submit" name="subida_manual" class="btn-primary" style="grid-column: span 2; margin-top:10px;">Guardar Vehículo</button>
@@ -198,6 +218,7 @@ $lista_autos = $conn->query($query_autos);
                     </div>
                 </div>
             </div>
+            
             <div class="card" style="margin-top: 30px;">
                 <h3 style="color: #fff; border: none; padding: 0; margin-bottom: 20px;">Listado de Vehículos</h3>
                 <div style="overflow-x: auto;">
@@ -206,7 +227,7 @@ $lista_autos = $conn->query($query_autos);
                             <tr>
                                 <th>Marca / Modelo</th>
                                 <th>Cat.</th>
-                                <th>Año</th>
+                                <th>Motor / Aut.</th>
                                 <th>Precio</th>
                                 <th>Estado</th>
                                 <th>Acciones</th>
@@ -220,7 +241,7 @@ $lista_autos = $conn->query($query_autos);
                                 <tr>
                                     <td><strong><?php echo htmlspecialchars($auto['marca'] . " " . $auto['modelo']); ?></strong></td>
                                     <td><?php echo htmlspecialchars($auto['categoria']); ?></td>
-                                    <td><?php echo $auto['anio']; ?></td>
+                                    <td><?php echo htmlspecialchars($auto['motor_autonomia']); ?></td>
                                     <td>$<?php echo number_format($auto['precio'], 2); ?></td>
                                     <td><span class="badge <?php echo $clase_estado; ?>"><?php echo $auto['estado']; ?></span></td>
                                     <td class="action-btns">
@@ -255,13 +276,11 @@ $lista_autos = $conn->query($query_autos);
                     if (panel.style.maxHeight) {
                         panel.style.maxHeight = null;
                     } else {
-                        // Calcula el tamaño necesario
-                        panel.style.maxHeight = panel.scrollHeight + "px";
+                        panel.style.maxHeight = panel.scrollHeight + 100 + "px";
                         
-                        // Si es un sub-acordeón, asegúrate de expandir el padre para que quepa
                         var parentPanel = this.closest('.panel#panel-principal');
                         if(parentPanel && parentPanel !== panel) {
-                            parentPanel.style.maxHeight = (parentPanel.scrollHeight + panel.scrollHeight + 50) + "px";
+                            parentPanel.style.maxHeight = (parentPanel.scrollHeight + panel.scrollHeight + 150) + "px";
                         }
                     } 
                 });
